@@ -4,7 +4,7 @@ namespace Buglerv\Stepper;
 
 use Buglerv\Stepper\Stores\StepperStoreInterface;
 
-interface StorefactoryInterface
+interface StoreFactoryInterface
 {
     public function make( string $store = null ) : StepperStoreInterface;
 }
