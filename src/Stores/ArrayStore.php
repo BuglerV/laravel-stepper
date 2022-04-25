@@ -32,7 +32,7 @@ class ArrayStore implements StepperStoreInterface
     */
     public function get(string $name)
     {
-        return $this->data[$name];
+        return new StepperOptionsBag($this->data[$name] ?? []);
     }
     
    /**

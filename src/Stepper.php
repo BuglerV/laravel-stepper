@@ -2,7 +2,7 @@
 
 namespace Buglerv\Stepper;
 
-use App\System\Traits\ChainableMethods;
+namespace Buglerv\Stepper\Traits\ChainableMethods;
 use Buglerv\Stepper\Stores\StepperStoreInterface;
 use RuntimeException;
 
@@ -157,6 +157,11 @@ class Stepper implements StepperInterface
     public function getOptions($name)
     {
         if(!isset(self::$options[$name])){
+            if(!$this->store->has($this->getRealName($name)))
+            {
+                throw new RuntimeException("[Stepper] Options with name '{$name}' doesnt exist.");
+            }
+          
             self::$options[$name] = $this->store->get($this->getRealName($name));
         }
         
