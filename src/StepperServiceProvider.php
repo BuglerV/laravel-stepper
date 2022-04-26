@@ -31,6 +31,20 @@ class StepperServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loads();
+        
+        $this->publishes([
+            __DIR__.'/../config' => config_path(),
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/stepper'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/stepper')
+        ],'stepper');
+    }
+    
+   /**
+    *  Все пути для пакета...
+    */
+    protected function loads()
+    {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
       
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'stepper');
