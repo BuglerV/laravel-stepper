@@ -2,10 +2,9 @@
 
 namespace Buglerv\Stepper;
 
-use Illuminate\Support\Str;
-use RuntimeException;
-
+use Buglerv\Stepper\Exceptions\StoreDoesntExistException;
 use Buglerv\Stepper\Stores\StepperStoreInterface;
+use Illuminate\Support\Str;
 
 class StoreFactory implements StoreFactoryInterface
 {
@@ -18,7 +17,7 @@ class StoreFactory implements StoreFactoryInterface
         $storeName = __namespace__ . '\\Stores\\' . Str::ucfirst("{$store}Store");
         
         if(! class_exists($storeName) ){
-            throw new RuntimeException("[Stepper] Class '{$storeName}' doesnt exist.");
+            throw new StoreDoesntExistException($store);
         }
         
         return new $storeName;

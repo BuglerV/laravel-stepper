@@ -20,7 +20,9 @@ class StepperOptionsBag
     }
     
    /**
+    *  Возвращает все опции...
     *
+    *  @return array
     */
     public function getAll()
     {
@@ -28,7 +30,7 @@ class StepperOptionsBag
     }
     
    /*
-    *  Геттер
+    *  Геттер...
     */
     public function __get($name)
     {
@@ -36,7 +38,7 @@ class StepperOptionsBag
     }
     
    /*
-    *  Сеттер
+    *  Сеттер...
     */
     public function __set($name,$value)
     {
