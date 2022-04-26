@@ -5,6 +5,7 @@ namespace Buglerv\Stepper;
 use Illuminate\Support\ServiceProvider;
 use Buglerv\Stepper\Stores\StepperStoreInterface;
 use Buglerv\Stepper\Components\Info;
+use Buglerv\Stepper\Console\Commands\CreateStepperCommand;
 
 class StepperServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,12 @@ class StepperServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loads();
+        
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CreateStepperCommand::class,
+            ]);
+        }
         
         $this->publishes([
             __DIR__.'/../config' => config_path(),
