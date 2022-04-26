@@ -2,7 +2,7 @@
 
 namespace Buglerv\Stepper;
 
-namespace Buglerv\Stepper\Traits\ChainableMethods;
+use Buglerv\LaravelHelpers\Traits\ChainableMethods;
 use Buglerv\Stepper\Stores\StepperStoreInterface;
 use RuntimeException;
 
