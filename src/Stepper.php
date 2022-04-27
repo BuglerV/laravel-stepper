@@ -54,7 +54,7 @@ class Stepper implements StepperInterface
         }
      
         if(!$steps){
-            throw(new ControllerDoesntExist("You need to create [{$class}_step1] class.",$class));
+            throw(new ControllerDoesntExist("You need to create [{$class}_step1] controller.",$class));
         }          
      
         $options = new StepperOptionsBag([

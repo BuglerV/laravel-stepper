@@ -8,6 +8,11 @@ use RuntimeException;
 abstract class BaseStepperException extends RuntimeException
 {
     /**
+     * @var  bool  Выводить ли в лог Trace исключения...
+     */
+    protected $trace = true;
+    
+    /**
      * @var  string  Сообщение...
      */
     protected $message;
@@ -21,7 +26,7 @@ abstract class BaseStepperException extends RuntimeException
      * @param  $message  Сообщение...
      * @param  $param
      */
-    public function __construct($message,$param)
+    public function __construct($message,$param=null)
     {
         $this->message = $message;
         $this->param = $param;
@@ -34,12 +39,27 @@ abstract class BaseStepperException extends RuntimeException
      */
     public function report()
     {
+        $message = $this->getLogMessage();
+        $trace = $this->trace
+                      ? $this->getTraceAsString()
+                      : "{$this->getFile()}:{$this->getLine()}";
+      
         Log::build([
           'driver' => 'single',
           'path' => config('stepper.log-file'),
-        ])->error($this->message);
+        ])->error("{$message}\n{$trace}");
         
         return 1;
+    }
+    
+    /**
+     * Возвращаем сообщение исключения для записи в лог.
+     *
+     * @return string
+     */
+    protected function getLogMessage()
+    {
+        return $this->message;
     }
 }
 
