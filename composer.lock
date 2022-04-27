@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93d2628c65bb5ff28a744588e72300ca",
+    "content-hash": "167bb9ddce2d9c4c484cc79a0a24dbe4",
     "packages": [
         {
             "name": "buglerv/laravel-helpers",

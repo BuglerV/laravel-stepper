@@ -1,16 +1,11 @@
 {
     "name": "buglerv/stepper",
     "description": "Package",
-    "version": "1.1",
     "type": "package",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Buglerv\\Stepper\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+            "Buglerv\\Stepper\\": "src/",
             "Buglerv\\Stepper\\Tests\\Controllers\\": "tests/Controllers/"
         }
     },
