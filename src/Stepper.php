@@ -2,8 +2,11 @@
 
 namespace Buglerv\Stepper;
 
-use Buglerv\LaravelHelpers\Traits\ChainableMethods;
+use Buglerv\Stepper\Exceptions\ControllerDoesntExist;
+use Buglerv\Stepper\Exceptions\OptionsDoesntExist;
+use Buglerv\Stepper\Exceptions\UnexistingViewAssignment;
 use Buglerv\Stepper\Stores\StepperStoreInterface;
+use Buglerv\LaravelHelpers\Traits\ChainableMethods;
 use RuntimeException;
 
 class Stepper implements StepperInterface
@@ -51,7 +54,7 @@ class Stepper implements StepperInterface
         }
      
         if(!$steps){
-            throw(new RuntimeException("You need to create [{$class}_step1] class."));
+            throw(new ControllerDoesntExist("You need to create [{$class}_step1] class.",$class));
         }          
      
         $options = new StepperOptionsBag([
@@ -159,7 +162,7 @@ class Stepper implements StepperInterface
         if(!isset(self::$options[$name])){
             if(!$this->store->has($this->getRealName($name)))
             {
-                throw new RuntimeException("[Stepper] Options with name '{$name}' doesnt exist.");
+                throw new OptionsDoesntExist("Options with name '{$name}' doesnt exist.",$name);
             }
           
             self::$options[$name] = $this->store->get($this->getRealName($name));
@@ -201,7 +204,7 @@ class Stepper implements StepperInterface
     public function setView(string $view)
     {
         if(!view()->exists($view)){
-            throw new RuntimeException("[Stepper] Try to assign unexisting view '{$view}'.");
+            throw new UnexistingViewAssignment("Try to assign unexisting view '{$view}'.",$view);
         }
         
         self::$view = $view;
