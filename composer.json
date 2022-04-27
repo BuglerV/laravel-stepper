@@ -9,6 +9,11 @@
             "Buglerv\\Stepper\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Buglerv\\Stepper\\Tests\\Controllers\\": "tests/Controllers/"
+        }
+    },
     "authors": [
         {
             "name": "BuglerV",
