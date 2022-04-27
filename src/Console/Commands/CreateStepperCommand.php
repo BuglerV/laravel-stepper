@@ -11,7 +11,10 @@ class CreateStepperCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stepper:create {step=1 : Steps count}';
+    protected $signature = 'stepper:create
+                              {controller : Creating controller name}
+                              {-s|--steps=1 : Steps count}
+                            ';
 
     /**
      * The console command description.
@@ -37,8 +40,19 @@ class CreateStepperCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Works!');
+        $steps = (int)$this->option('steps');
+        $steps = $steps ?: 1;
+        
+        $controller = $this->argument('controller');
       
+        for($step = 1; $step <= $steps; $step++){
+            $this->callSilently('make:controller', [
+                'name' => "{$controller}_step{$step}",
+            ]);
+            
+            $this->info("Controller {$controller}_step{$step} created or already exists.");
+        }
+        
         return 0;
     }
 }
