@@ -185,7 +185,7 @@ class Stepper implements StepperInterface
     *  Если необходимо как-то преобразовать
     *  $name, то делать это здесь...
     */
-    protected function getRealName(string $name) : string
+    public function getRealName(string $name) : string
     {
         return 'stepper_' . $name;
     }
