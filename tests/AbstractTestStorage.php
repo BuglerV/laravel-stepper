@@ -30,16 +30,6 @@ abstract class AbstractTestStorage extends TestCase
     }
     
     /**
-     * Удаляем тестовые опции степпера, если они есть...
-     *
-     * @afterClass
-     */
-    public static function can_remove() : void
-    {
-        static::$stepper->remove(static::$name);
-    }
-    
-    /**
      * @return  string  Название хранилища...
      */
     protected static function storageName()
@@ -74,7 +64,7 @@ abstract class AbstractTestStorage extends TestCase
     
     /**
      * @test
-     * @depends can_init
+     * @depends can_get_object
      */
     public function can_walk_on()
     {
@@ -88,7 +78,7 @@ abstract class AbstractTestStorage extends TestCase
     
     /**
      * @test
-     * @depends can_init
+     * @depends can_walk_on
      */
     public function can_get_options()
     {
@@ -96,5 +86,19 @@ abstract class AbstractTestStorage extends TestCase
         
         $this->assertIsObject($options);
         $this->assertEquals(StepperOptionsBag::class,get_class($options));
+    }
+    
+    
+    /**
+     * Удаляем тестовые опции степпера, если они есть...
+     *
+     * @test
+     * @depends can_get_options
+     */
+    public function can_remove()
+    {
+        static::$stepper->remove(static::$name);
+        
+        $this->assertFalse(static::$stepper->has(static::$name));
     }
 }
