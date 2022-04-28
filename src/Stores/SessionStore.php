@@ -16,7 +16,7 @@ class SessionStore implements StepperStoreInterface
     */
     public function put(string $name, StepperOptionsBag $options)
     {
-        session([$name => $options->getAll()]);
+        session()->put($name,$options->getAll());
     }
     
    /**

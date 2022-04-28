@@ -2,68 +2,99 @@
 
 namespace Buglerv\Stepper\Tests;
 
-use Tests\TestCase;
+use Buglerv\Stepper\StepperOptionsBag;
 use Buglerv\Stepper\StoreFactory;
 use Buglerv\Stepper\Stepper;
-
 use Buglerv\Stepper\Tests\Controllers\TestController;
+use LogicException;
+use Tests\TestCase;
 
 abstract class AbstractTestStorage extends TestCase
 {
     /**
      * @var  \Buglerv\Stepper\Stepper  Экземпляр степпера...
      */
-    protected $stepper;
-    
-    /**
-     * @var  string  Название хранилища...
-     */
-    abstract protected $storageName;
+    protected static $stepper;
     
     /**
      * @var  string  Имя степпера...
      */
-    protected $name = 'test';
+    protected static $name = 'test';
   
     /**
      * Создаем рабочий экземпляр степпера...
      */
-    public function __construct()
+    public static function setUpBeforeClass() : void
     {
-        $this->stepper = new Stepper((new StoreFactory)->make($this->storageName));
-        
-        parent::__construct(...func_get_args());
+        static::$stepper = new Stepper((new StoreFactory)->make(static::storageName()));
     }
     
-    public function test_stepper_can_init()
+    /**
+     * Удаляем тестовые опции степпера, если они есть...
+     *
+     * @afterClass
+     */
+    public static function can_remove() : void
     {
-        $this->assertFalse($this->stepper->has($this->name));
+        static::$stepper->remove(static::$name);
+    }
+    
+    /**
+     * @return  string  Название хранилища...
+     */
+    protected static function storageName()
+    {
+        throw new LogicException('You need to overwrite ['. static::class .'::storageName()] static method.');
+    }
+    
+    /**
+     * @test
+     */
+    public function can_init()
+    {
+        if(static::$stepper->has(static::$name)){
+            static::$stepper->remove(static::$name);
+        }
       
-        $this->stepper->init($this->name,TestController::class);
+        $this->assertFalse(static::$stepper->has(static::$name));
+      
+        static::$stepper->init(static::$name,TestController::class);
         
-        $this->assertTrue($this->stepper->has($this->name));
-        
-        $this->stepper->remove($this->name);
-        
-        $this->assertFalse($this->stepper->has($this->name));
+        $this->assertTrue(static::$stepper->has(static::$name));
     }
     
-    public function test_stepper_walk()
+    /**
+     * @test
+     * @depends can_init
+     */
+    public function can_get_object()
     {
-        $this->stepper->init($this->name,TestController::class);
+        $this->assertIsObject(static::$stepper->get(static::$name));
+    }
+    
+    /**
+     * @test
+     * @depends can_init
+     */
+    public function can_walk_on()
+    {
+        $this->assertTrue(static::$stepper->forward(static::$name));
+        $this->assertTrue(static::$stepper->forward(static::$name));
+        $this->assertFalse(static::$stepper->forward(static::$name));
+        $this->assertSame(3,static::$stepper->current(static::$name));
+        $this->assertTrue(static::$stepper->back(static::$name,1));
+        $this->assertFalse(static::$stepper->back(static::$name));
+    }
+    
+    /**
+     * @test
+     * @depends can_init
+     */
+    public function can_get_options()
+    {
+        $options = static::$stepper->getOptions(static::$name);
         
-        $class = $this->stepper->get($this->name);
-        $this->assertIsObject($class);
-        
-        $this->assertTrue($this->stepper->forward($this->name));
-        $this->assertTrue($this->stepper->forward($this->name));
-        $this->assertFalse($this->stepper->forward($this->name));
-        $this->assertTrue($this->stepper->back($this->name,1));
-        $this->assertFalse($this->stepper->back($this->name));
-        
-        $this->stepper->remove($this->name);
+        $this->assertIsObject($options);
+        $this->assertEquals(StepperOptionsBag::class,get_class($options));
     }
 }
-
-
-

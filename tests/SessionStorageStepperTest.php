@@ -5,7 +5,10 @@ namespace Buglerv\Stepper\Tests;
 class SessionStorageStepperTest extends AbstractTestStorage
 {
     /**
-     * @var  string  Название хранилища...
+     * @return  string  Название хранилища...
      */
-    protected $storageName = 'session';
+    protected static function storageName()
+    {
+        return 'session';
+    }
 }

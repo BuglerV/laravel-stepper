@@ -5,7 +5,10 @@ namespace Buglerv\Stepper\Tests;
 class DatabaseStorageStepperTest extends AbstractTestStorage
 {
     /**
-     * @var  string  Название хранилища...
+     * @return  string  Название хранилища...
      */
-    protected $storageName = 'database';
+    protected static function storageName()
+    {
+        return 'database';
+    }
 }
