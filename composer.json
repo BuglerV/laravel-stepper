@@ -17,6 +17,6 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "buglerv/laravel-helpers": "1.0.0"
+        "buglerv/laravel-helpers": "1.*"
     }
 }
