@@ -15,6 +15,13 @@
             "email": "El_Bugler@mail.ru"
         }
     ],
+	"extra": {
+		"laravel": {
+			"providers": [
+                "Buglerv\\Stepper\\StepperServiceProvider"
+			]
+		}
+	},
     "minimum-stability": "stable",
     "require": {
         "buglerv/laravel-helpers": "1.*"
