@@ -2,7 +2,7 @@
 
 namespace Buglerv\Stepper\Stores;
 
-use Illuminate\Support\Facades\Db;
+use Illuminate\Support\Facades\DB;
 use Buglerv\Stepper\StepperOptionsBag;
 
 class DatabaseStore implements StepperStoreInterface
@@ -17,7 +17,7 @@ class DatabaseStore implements StepperStoreInterface
     */
     public function put(string $name, StepperOptionsBag $options)
     {
-        Db::table('stepper')->updateOrInsert([
+        DB::table('stepper')->updateOrInsert([
             'name' => $name,
         ],[
             'options' => json_encode($options->getAll()),
@@ -32,7 +32,7 @@ class DatabaseStore implements StepperStoreInterface
     */
     public function get(string $name)
     {
-        $options = Db::table('stepper')
+        $options = DB::table('stepper')
                      ->where('name',$name)
                      ->first('options')
                      ->options;
@@ -49,7 +49,7 @@ class DatabaseStore implements StepperStoreInterface
     */
     public function remove(string $name)
     {
-        Db::table('stepper')->where('name',$name)->delete();
+        DB::table('stepper')->where('name',$name)->delete();
     }
 
    /**
@@ -60,6 +60,6 @@ class DatabaseStore implements StepperStoreInterface
     */
     public function has(string $name) : bool
     {
-        return Db::table('stepper')->where('name',$name)->count();
+        return DB::table('stepper')->where('name',$name)->count();
     }
 }
