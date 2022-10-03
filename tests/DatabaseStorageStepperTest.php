@@ -2,8 +2,12 @@
 
 namespace Buglerv\Stepper\Tests;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
 class DatabaseStorageStepperTest extends AbstractTestStorage
 {
+    use RefreshDatabase;
+	
     /**
      * @return  string  Название хранилища...
      */
@@ -11,4 +15,18 @@ class DatabaseStorageStepperTest extends AbstractTestStorage
     {
         return 'database';
     }
+	
+	/**
+	 * Get package providers.
+	 *
+	 * @param  \Illuminate\Foundation\Application  $app
+	 *
+	 * @return array<int, string>
+	 */
+	protected function getPackageProviders($app)
+	{
+		return [
+			'Buglerv\Stepper\StepperServiceProvider',
+		];
+	}
 }

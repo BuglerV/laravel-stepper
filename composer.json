@@ -1,20 +1,31 @@
 {
     "name": "buglerv/laravel-stepper",
-    "description": "Package",
+    "description": "Multistep controllers.",
     "type": "package",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Buglerv\\Stepper\\": "src/",
-            "Buglerv\\Stepper\\Tests\\": "tests/"
-        }
-    },
     "authors": [
         {
             "name": "BuglerV",
             "email": "El_Bugler@mail.ru"
         }
     ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Buglerv\\Stepper\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Buglerv\\Stepper\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "laravel/framework": "^8.37|^9.0",
+        "buglerv/laravel-helpers": "1.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0|^7.0"
+    },
 	"extra": {
 		"laravel": {
 			"providers": [
@@ -22,8 +33,5 @@
 			]
 		}
 	},
-    "minimum-stability": "stable",
-    "require": {
-        "buglerv/laravel-helpers": "1.*"
-    }
+    "minimum-stability": "stable"
 }

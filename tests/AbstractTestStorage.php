@@ -7,7 +7,7 @@ use Buglerv\Stepper\StoreFactory;
 use Buglerv\Stepper\Stepper;
 use Buglerv\Stepper\Tests\Controllers\TestController;
 use LogicException;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 abstract class AbstractTestStorage extends TestCase
 {
